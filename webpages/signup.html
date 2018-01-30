@@ -4,9 +4,24 @@
     <title>Sign Up</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/signup.css">
   </head>
   <body>
-    <main>
+    <main class="account-creator">
+      <h1>Create your account</h1>
+      <div class="inputs">
+        <p>First Name</p>
+        <p><input name="firstname" type="text" autofocus  minlength="4" maxlength="50"></p>
+        <p>Last Name</p>
+        <p><input name="lastname" type="text" minlength="4" maxlength="50"></p>
+        <p>Email Address</p>
+        <p><input name="email" type="text" minlength="4" maxlength="50"></p>
+        <p>Password</p>
+        <p><input name="password" type="password" minlength="4" maxlength="50"></p>
+        <p>Password Re-conformation</p>
+        <p><input name="password-reconfirm" type="password" minlength="4" maxlength="50"></p>
+        <button type="button">Sign up</button>
+      </div>
     </main>
   </body>
 </html>

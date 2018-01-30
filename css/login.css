@@ -6,13 +6,6 @@
   position: relative;
 }
 
-input {
-  margin: 1em 0 0.5em 0;
-  width: 99%;
-  padding: 3px 0 3px 0;
-  font-size: 14px;
-}
-
 h1 {
   font-size: 2em;
   margin: 0 auto;
@@ -27,6 +20,13 @@ button {
   margin-top: 2em;
   font-weight: bold;
   font-size: 14px
+}
+
+input {
+  margin: 1em 0 0.5em 0;
+  width: 99%;
+  padding: 3px 0 3px 0;
+  font-size: 14px;
 }
 
 #sign-up-link {
