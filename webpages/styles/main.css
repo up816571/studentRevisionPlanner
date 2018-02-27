@@ -1,3 +1,43 @@
+/* Variables*/
+:root {
+  --bg-col: rgba(237,237,237, 0.5);
+  --main-font:  'Open Sans', sans-serif;
+}
+
+/*Defualt styles*/
+
+body {
+  background-color: var(--bg-col);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 25px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+p, h1, h2, button, input {
+  font-family: var(--main-font);
+}
+
+a {
+  text-decoration: none;
+  color: grey;
+}
+
+/*login form*/
+
 .login-form {
   padding-top: 200px;
   height: 40%;
@@ -6,14 +46,14 @@
   position: relative;
 }
 
-h1 {
+#sign-in-feild {
   font-size: 2em;
   margin: 0 auto;
   width: 200px;
   padding-bottom: 1em;
 }
 
-button {
+#sign-in {
   width: 100%;
   padding-right: 1px;
   padding: 5px 0 5px 0;
@@ -22,7 +62,7 @@ button {
   font-size: 14px
 }
 
-input {
+.sign-in-feild {
   margin: 1em 0 0.5em 0;
   width: 99%;
   padding: 3px 0 3px 0;
