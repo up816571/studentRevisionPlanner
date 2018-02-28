@@ -36,6 +36,10 @@ a {
   color: grey;
 }
 
+td {
+  font-size: 1em;
+}
+
 /*login form*/
 
 .login-form {
