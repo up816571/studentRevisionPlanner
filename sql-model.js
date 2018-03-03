@@ -19,7 +19,6 @@ async function shutDown() {
 }
 
 async function newConnection() {
-  // todo: this should really use connection pools
   const sql = await mysql.createConnection(config.mysql);
 
   // handle unexpected errors by just logging them

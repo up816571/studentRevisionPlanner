@@ -3,19 +3,38 @@
   <head>
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="client.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="362093077322-4bj6eec6mb9o9vsn1hh1dbb51h1gam98.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="111545869099-9g2l2jd6b9slqv6m7qgf0n7j5ub7crtu.apps.googleusercontent.com">
   </head>
   <body>
-    <div class="login-form">
-      <h1 id="sign-in-title">My Account</h1>
-      <div class="inputs">
-        <input class="sign-in-feild" name="username" type="text" autofocus placeholder="Email Address" minlength="4" maxlength="50">
-        <input class="sign-in-feild" name="password" type="password" placeholder="Password" minlength="4" maxlength="50">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div id="contentHolder"></div>
+    <template id="login-page">
+      <div class="login-form">
+        <h1 id="sign-in-title">My Account</h1>
+        <div class="google-button">
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
+          <script src="https://apis.google.com/js/platform.js" async defer></script>
+        </div>
       </div>
-      <h2 id="sign-up-link"><a href="#">Sign up</a></h2>
-    </div>
+    </template>
+    <template id="day-view-page">
+      <header>
+        <div id="center-nav">
+          <h1>Revision Planner</h1>
+          <div id="sign-out">
+            <a href="#" onclick="signOut();">Sign out</a>
+          </div>
+        </div>
+      </header>
+      <section id="session-display">
+        <template id="session-card">
+          <div class="session">
+            <h2 class="title">WEBF1</h2>
+          </div>
+        </template>
+      </section>
+    </template>
   </body>
 </html>
