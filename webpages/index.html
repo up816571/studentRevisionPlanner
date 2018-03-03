@@ -1,8 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Login</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <title>Revision Planner</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="client.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -23,18 +22,38 @@
       <header>
         <div id="center-nav">
           <h1>Revision Planner</h1>
-          <div id="sign-out">
-            <a href="#" onclick="signOut();">Sign out</a>
+          <div id="right-header">
+            <div id="type-changer-buttons">
+              <button type="button" id="day-button">Day</button>
+              <button type="button" id="week-button">Week</button>
+              <button type="button" id="month-button">Month</button>
+            </div>
+            <div id="sign-out">
+              <a href="#" onclick="signOut();">Sign out</a>
+            </div>
           </div>
         </div>
       </header>
-      <section id="session-display">
-        <template id="session-card">
-          <div class="session">
-            <h2 class="title">WEBF1</h2>
-          </div>
-        </template>
-      </section>
+      <main>
+        <div class="main-view-title">
+          <h2 id="session-dates">Todays sessions</h2>
+        </div>
+        <div class="display-nav-buttons">
+          <button type="button" id="previous-button"><</button>
+          <button type="button" id="next-button">></button>
+        </div>
+        <section id="session-display">
+          <div id="session-helper"></div>
+          <template id="session-card">
+            <div class="session">
+              <h3 class="title"></h3>
+              <h3 class="date"></h3>
+              <h3 class="time"></h3>
+              <h3 class="type"></h3>
+            </div>
+          </template>
+        </section>
+      </main>
     </template>
   </body>
 </html>

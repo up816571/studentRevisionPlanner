@@ -24,5 +24,7 @@ app.get('/data/sessions', getSessionsToPage);
 //server function
 
 async function getSessionsToPage(req, res) {
-  res.send(await db.getSessions(req.user.id));
+  let pageDisplacer = req.query.page;
+  let pageType = req.query.type;
+  res.send(await db.getSessions(req.user.id, pageDisplacer, pageType));
 }

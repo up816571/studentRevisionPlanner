@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 /* Variables*/
 :root {
   --bg-col: rgba(237,237,237, 0.5);
@@ -8,6 +10,7 @@
 
 body {
   background-color: var(--bg-col);
+  font-family: 'Open Sans', sans-serif;
 }
 
 * {
@@ -27,8 +30,9 @@ h2 {
   font-size: 18px;
 }
 
-p, h1, h2, button, input {
-  font-family: var(--main-font);
+h3 {
+  font-size: 16px;
+  font-weight: normal;
 }
 
 a {
@@ -71,4 +75,78 @@ td {
   width: 99%;
   padding: 3px 0 3px 0;
   font-size: 14px;
+}
+
+/*Main page*/
+header {
+  height: 2.5em;
+  background-color: lightblue;
+  padding-top: 5px;
+  padding-left: 10px;
+  font-size: 1.4em;
+}
+
+#right-header {
+  right: 0;
+  margin: 0 auto;
+  min-width: 5em;
+  position: absolute;
+}
+
+#sign-out {
+  display: inline;
+  padding-right: 20px;
+}
+
+#type-changer-buttons {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+#type-changer-buttons > button {
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 7px 10px;
+  display: inline;
+  margin-right: 5px;
+}
+
+#center-nav {
+  max-width: 50em;
+  margin: 0 auto;
+  position: relative;
+}
+
+#center-nav  > h1 {
+  position: absolute;
+}
+
+.display-nav-buttons {
+  display: inline;
+}
+
+.display-nav-buttons > button {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+
+.main-view-title {
+  display: inline;
+  margin-right: 1em;
+}
+
+.main-view-title > h2{
+  display: inline;
+}
+
+main {
+  max-width: 70em;
+  margin: 0 auto;
+  padding-left: 0.5em;
+}
+
+.session {
+  margin: 10px 0;
 }
