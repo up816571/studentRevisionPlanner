@@ -133,8 +133,9 @@ header {
 }
 
 .main-view-title {
-  display: inline;
+  display: inline-block;
   margin-right: 1em;
+  min-width: 18em;
 }
 
 .main-view-title > h2{

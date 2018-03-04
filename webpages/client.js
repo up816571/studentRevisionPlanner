@@ -1,6 +1,9 @@
 window.addEventListener('load', initialize);
 let pageDisplacer = 0;
 let pageType = 'day';
+let todaysDate = new Date();
+const day = 60 * 60 * 24 * 1000;
+let newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
 
 function initialize() {
   showLogin();
@@ -40,11 +43,19 @@ function signOut() {
   });
 }
 
+function getDaysInMonth() {
+  year = newDate.getFullYear();
+  month = newDate.getMonth();
+  return new Date(year, month, 0).getDate();
+}
+
 async function showPreviousSessions() {
   if (pageType == 'day') {
     pageDisplacer -= 1;
   } else if (pageType == 'week') {
     pageDisplacer -= 7;
+  } else if (pageType == 'month') {
+    pageDisplacer -= getDaysInMonth();
   }
   requestSessions(pageDisplacer, pageType);
 }
@@ -54,6 +65,8 @@ async function showNextSessions() {
     pageDisplacer += 1;
   } else if (pageType == 'week') {
     pageDisplacer += 7;
+  } else if (pageType == 'month') {
+    pageDisplacer += getDaysInMonth();
   }
   requestSessions(pageDisplacer, pageType);
 }
@@ -64,7 +77,6 @@ function viewInDays() {
 }
 
 function viewInWeeks() {
-  console.log('something was supposed to happen');
   pageType = 'week';
   requestSessions(pageDisplacer, pageType);
 }
@@ -95,30 +107,30 @@ async function requestSessions(pageDisplacer, pageType) {
   const sessionsTemplateEl = document.getElementById('session-helper');
   const dateForSessionsEl = document.getElementById('session-dates');
 
-  let todaysDate = new Date();
-  let day = 60 * 60 * 24 * 1000;
-  let newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
+  newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
   const formattedDate = newDate.toISOString().substring(0, 10);
-
-  let now = newDate? new Date(newDate) : new Date();
-  now.setHours(0,0,0,0);
-
-  let monday = new Date(now);
-  monday.setDate(monday.getDate() - monday.getDay() + 1);
-  formattedMinDate = monday.toISOString().substring(0, 10);
-
-  let sunday = new Date(now);
-  sunday.setDate(sunday.getDate() - sunday.getDay() + 7);
-  formattedMaxDate = sunday.toISOString().substring(0, 10);
 
   if (pageType == 'day') {
     dateForSessionsEl.textContent='Sessions for ' + formattedDate;
   } else if (pageType == 'week') {
+    let now = newDate? new Date(newDate) : new Date();
+    now.setHours(0,0,0,0);
+
+    let monday = new Date(now);
+    monday.setDate(monday.getDate() - monday.getDay() + 1);
+    formattedMinDate = monday.toISOString().substring(0, 10);
+
+    let sunday = new Date(now);
+    sunday.setDate(sunday.getDate() - sunday.getDay() + 7);
+    formattedMaxDate = sunday.toISOString().substring(0, 10);
     dateForSessionsEl.textContent='Sessions between ' + formattedMinDate + ' and ' + formattedMaxDate;
+  } else if (pageType == 'month') {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+    dateForSessionsEl.textContent='All Sessions for ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear();
   }
-
-
   sessionsTemplateEl.innerHTML='';
+
   if (data.length == 0) {
     sessionsTemplateEl.innerHTML='<h3>You have no sessions</h3>';
     return;
