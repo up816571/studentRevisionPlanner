@@ -9,6 +9,7 @@
   </head>
   <body>
     <div id="contentHolder"></div>
+    <!-- Main templates -->
     <template id="login-page">
       <div class="login-form">
         <h1 id="sign-in-title">My Account</h1>
@@ -35,24 +36,43 @@
         </div>
       </header>
       <main>
-        <div class="main-view-title">
-          <h2 id="session-dates"></h2>
-        </div>
-        <div class="display-nav-buttons">
-          <button type="button" id="previous-button"><</button>
-          <button type="button" id="next-button">></button>
-        </div>
-        <section id="session-display">
-          <div id="session-helper"></div>
-          <template id="session-card">
-            <div class="session">
-              <h3 class="title"></h3>
-              <h3 class="date"></h3>
-              <h3 class="time"></h3>
-              <h3 class="type"></h3>
-            </div>
-          </template>
-        </section>
+        <div id="sub-content-holder"></div>
+        <!-- sub templates -->
+        <template id="defulat-view">
+          <div class="main-view-title">
+            <h2 id="session-dates"></h2>
+          </div>
+          <div class="display-nav-buttons">
+            <button type="button" id="previous-button"><</button>
+            <button type="button" id="next-button">></button>
+            <button type="button" id="addNewSession">New session</button>
+          </div>
+          <section id="session-display">
+            <div id="session-helper"></div>
+            <template id="session-card">
+              <div class="session">
+                <h3 class="title"></h3>
+                <h3 class="date"></h3>
+                <h3 class="time"></h3>
+                <h3 class="type"></h3>
+              </div>
+            </template>
+          </section>
+        </template>
+        <template id="add-session">
+          <h2>Add a session</h2>
+          <button type="button" id="backToSessions-button">Go Back</button>
+          <form>
+            <input type="text" id="title-input" required placeholder="title" maxlength="20">
+            <input type="date" id="date-input" required>
+            <input type="time" id="time-input" required>
+            <textarea id="description-input" placeholder="Description" maxlength="400"></textarea>
+            <input id="session-input" type="radio" name="type" value="session" checked> Session
+            <input id="deadline-input" type="radio" name="type" value="deadline">  Deadline
+          </form>
+          <button type="button" id="submit-button">Submit</button>
+          <div id="error-appender"></div>
+        </template>
       </main>
     </template>
   </body>

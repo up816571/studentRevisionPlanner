@@ -75,6 +75,13 @@ async function getSessions(userid, pageDisplacer, pageType) {
   return sessions;
 }
 
+async function addSession(sessionName, sessionDate, sessionTime, description, typeOfSession, userid) {
+  const sql = await init();
+  const insertQuery = sql.format('INSERT INTO sessions SET ? ;', {sessionName, sessionDate, sessionTime, description, typeOfSession, userid});
+  await sql.query(insertQuery);
+}
+
 module.exports = {
+  addSession: addSession,
   getSessions: getSessions,
 };

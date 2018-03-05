@@ -20,11 +20,27 @@ app.listen(PORT, async () => {
 
 // Server API
 app.get('/data/sessions', getSessionsToPage);
+app.get('/api/hello', userAuth);
+app.post('/data/sessions', postNewSessions);
 
 //server function
 
+async function userAuth (req, res) {
+  res.send(req.user.displayName || 'user without a name');
+  console.log('auth req by ' + req.user.emails[0].value);
+}
+
 async function getSessionsToPage(req, res) {
-  let pageDisplacer = req.query.page;
-  let pageType = req.query.type;
+  const pageDisplacer = req.query.page;
+  const pageType = req.query.type;
   res.send(await db.getSessions(req.user.id, pageDisplacer, pageType));
+}
+
+async function postNewSessions(req, res) {
+  const title = req.query.title;
+  const date = req.query.date;
+  const time = req.query.time;
+  const desc = req.query.desc;
+  const type = req.query.type;
+  res.send(await db.addSession(title, date, time, desc, type, req.user.id));
 }

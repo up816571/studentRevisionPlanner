@@ -9,7 +9,7 @@ create table if not exists plannerdb.sessions (
   sessionDate date,
   sessionTime time,
   description text,
-  typeof text,
+  typeOfSession text,
   userid varchar(50)
 );
 
