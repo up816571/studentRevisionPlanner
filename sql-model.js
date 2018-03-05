@@ -34,6 +34,11 @@ async function releaseConnection(connection) {
   await connection.end();
 }
 
+//getSessions is used to get all sessions from the database into the html pageType
+// @params {userid} used to get that users sessions
+// @params {pageDisplacer} used to calculate the day that the user is viewing
+// @params {pageType} used to get the sessions for a day, week, or month
+// @return {sessions an array of all that users sessions between the specified days}
 async function getSessions(userid, pageDisplacer, pageType) {
   const sql = await init();
 
@@ -75,6 +80,13 @@ async function getSessions(userid, pageDisplacer, pageType) {
   return sessions;
 }
 
+//addSession is used to add a session to the database based on the users input
+// @params {sessionName} the sessions name to save
+// @params {sessionDate} the sessions date to save
+// @params {sessionTime} the sessione time to save
+// @params {description} the sessions description to save
+// @params {typeOfSession} if the sesssion is a session or deadline
+// @params {userid} the user to save that session to
 async function addSession(sessionName, sessionDate, sessionTime, description, typeOfSession, userid) {
   const sql = await init();
   const insertQuery = sql.format('INSERT INTO sessions SET ? ;', {sessionName, sessionDate, sessionTime, description, typeOfSession, userid});

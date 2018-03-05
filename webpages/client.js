@@ -46,7 +46,9 @@ function showSessionView() {
 }
 
 //Functions for adding sessions
+//addNewSession and submitASession
 
+//shows the template for adding a session
 function addNewSession() {
   currentView = 'add';
   const addingSession = document.getElementById("add-session").content.cloneNode(true);
@@ -56,7 +58,7 @@ function addNewSession() {
   document.getElementById('submit-button').addEventListener('click', submitASession);
 }
 
-
+//calls the server to add a session using the input boxes
 async function submitASession() {
   const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
   const fetchOptions = {
@@ -113,6 +115,7 @@ function onSignIn(googleUser) {
   showMain();
 }
 
+//Authentication function
 async function checkServer() {
   const id_token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
 
@@ -137,12 +140,16 @@ function signOut() {
 }
 
 //Functions for next and previous arrows
+
+//sub function to calculate how many days there are in a specific month
+// @return {int} returns how many days in the week as an int
 function getDaysInMonth() {
   year = newDate.getFullYear();
   month = newDate.getMonth();
   return new Date(year, month, 0).getDate();
 }
 
+//Loads the session on the previous day/week/month
 async function showPreviousSessions() {
   if (pageType == 'day') {
     pageDisplacer -= 1;
@@ -154,6 +161,7 @@ async function showPreviousSessions() {
   requestSessions(pageDisplacer, pageType);
 }
 
+//Loads the sessions on the next day/week/month
 async function showNextSessions() {
   if (pageType == 'day') {
     pageDisplacer += 1;
@@ -175,16 +183,19 @@ function detectReload() {
   }
 }
 
+//Changes the view to day
 function viewInDays() {
   pageType = 'day';
   detectReload();
 }
 
+//changes the view to week
 function viewInWeeks() {
   pageType = 'week';
   detectReload();
 }
 
+//changes the view to month
 function viewInMonths() {
   pageType = 'month';
   detectReload();
@@ -198,6 +209,7 @@ async function requestSessions(pageDisplacer, pageType) {
     headers: {'Authorization': 'Bearer ' + token}
   };
 
+  //url to include the viiew and what day
   let url = '/data/sessions';
   url += '?page=' + pageDisplacer;
   url += '&type=' + pageType;
@@ -215,6 +227,9 @@ async function requestSessions(pageDisplacer, pageType) {
   newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
   const formattedDate = newDate.toISOString().substring(0, 10);
 
+  //If the view is in dady then display the day as a header
+  //If in week show between the 2 dates
+  //if in month show that months name
   if (pageType == 'day') {
     dateForSessionsEl.textContent='Sessions for ' + formattedDate;
   } else if (pageType == 'week') {
@@ -234,6 +249,7 @@ async function requestSessions(pageDisplacer, pageType) {
     "July", "August", "September", "October", "November", "December"];
     dateForSessionsEl.textContent='All Sessions for ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear();
   }
+  //Make the session template blank to stop duplicate sessions from appearing
   sessionsTemplateEl.innerHTML='';
 
   if (data.length == 0) {
@@ -241,6 +257,7 @@ async function requestSessions(pageDisplacer, pageType) {
     return;
   }
 
+  //for all the sessions returned add them to the page in a session card template
   data.forEach((session) => {
     const seasionCardTemplateEl = document.getElementById('session-card').content.cloneNode(true);
     seasionCardTemplateEl.querySelector('.title').textContent = session.sessionName || 'No Name';

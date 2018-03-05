@@ -1,6 +1,6 @@
 # studentRevisionPlanner
 Todo
 ```
--Get and Post functions
+-Delete functions
 -HTML Calander pages
 ```
