@@ -1,0 +1,60 @@
+
+header{
+  padding-left:-30px;
+}
+
+head{
+  text-align: left;
+  font-size: 200px;
+}
+ body{
+ margin: 5px;
+ padding: 5px;
+ margin-bottom: 100px;
+ width:350px;
+}
+#Banner-buttons{
+  margin-left: auto;
+  margin-right: auto;
+   position: absolute;
+   left:1200px;
+   top:15px;
+}
+#CalenderNav{
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  left:1000px;
+  top: 70px;
+}
+ul{
+  width: auto;
+  float:right;
+  margin-top:8px;
+}
+li{
+  display: inline-block;
+  padding:15px 30px;
+}
+
+.calender{
+  width: 420%;
+}
+.weeks{
+  width: 420%;
+}
+.days{
+  width:300%;
+  margin-left: 200px;
+}
+
+th{
+  height: 15px;
+}
+td{
+   height: 40px;
+   padding: 40px;
+ }
+ .Time-colume{
+   width: 10%;
+  }

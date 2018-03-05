@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-20">
+    <link rel="stylesheet" href="../styles/main.css">
+  </head>
+  <body>
+    <h2>Edit a session</h2>
+    <button type="button" id="backToSessions-button">Go Back</button>
+    <button type="button" id="delete-button">delete</button>
+    <form>
+      <input type="text" id="title-input" required placeholder="title" maxlength="20">
+      <input type="date" id="date-input" required>
+      <input type="time" id="time-input" required>
+      <textarea id="description-input" placeholder="Description" maxlength="400"></textarea>
+      <input id="session-input" type="radio" name="type" value="session" checked>Session
+      <input id="deadline-input" type="radio" name="type" value="deadline">Deadline
+    </form>
+    <button type="button" id="submit-button">Save</button>
+    <div id="error-appender"></div>
+  </body>
+</html>
