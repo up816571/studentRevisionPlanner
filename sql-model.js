@@ -107,8 +107,8 @@ async function saveSingleSession(id, title, date, time, desc, type, userid) {
 }
 
 module.exports = {
-  addSession: addSession,
   getSessions: getSessions,
+  addSession: addSession,
   getSingleSession: getSingleSession,
   saveSingleSession: saveSingleSession,
 };

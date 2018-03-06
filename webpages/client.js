@@ -149,7 +149,7 @@ async function requestSessions(pageDisplacer, pageType) {
     headers: {'Authorization': 'Bearer ' + token}
   };
 
-  //url to include the viiew and what day
+  //url to include the view and what day
   let url = '/data/sessions';
   url += '?page=' + pageDisplacer;
   url += '&type=' + pageType;
@@ -161,7 +161,7 @@ async function requestSessions(pageDisplacer, pageType) {
   }
 
   const data = await response.json();
-  const sessionsTemplateEl = document.getElementById('session-helper');
+  const sessionsDivEl = document.getElementById('session-helper');
   const dateForSessionsEl = document.getElementById('session-dates');
 
   newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
@@ -190,10 +190,10 @@ async function requestSessions(pageDisplacer, pageType) {
     dateForSessionsEl.textContent='All Sessions for ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear();
   }
   //Make the session template blank to stop duplicate sessions from appearing
-  sessionsTemplateEl.innerHTML='';
+  sessionsDivEl.innerHTML='';
 
   if (data.length == 0) {
-    sessionsTemplateEl.innerHTML='<h3>You have no sessions</h3>';
+    sessionsDivEl.innerHTML='<h3>You have no sessions</h3>';
     return;
   }
 
@@ -208,7 +208,7 @@ async function requestSessions(pageDisplacer, pageType) {
     }
     sessionCardTemplateEl.querySelector('.session').id = session.id;
 
-    sessionsTemplateEl.appendChild(sessionCardTemplateEl);
+    sessionsDivEl.appendChild(sessionCardTemplateEl);
     document.getElementById(session.id).addEventListener('click', editSession);
   });
 }
@@ -252,7 +252,7 @@ async function submitASession() {
     errors = true;
   }
   if (!dateEl.checkValidity()) {
-    document.getElementById('error-appender').innerHTML+='<p>Invalid dat, this field must not be blank.</p>';
+    document.getElementById('error-appender').innerHTML+='<p>Invalid date, this field must not be blank.</p>';
     errors = true;
   }
   if (!timeEl.checkValidity()) {
@@ -294,6 +294,7 @@ async function submitASession() {
 
 async function editSession() {
   let id = this.id;
+  currentView = 'editor';
   const editView = document.getElementById("edit-session").content.cloneNode(true);
   document.getElementById('sub-content-holder').innerHTML='';
   document.getElementById('sub-content-holder').appendChild(editView);
