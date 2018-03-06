@@ -2,7 +2,8 @@
 <html>
   <head>
     <title>Revision Planner</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="icon" href="images/favicon.ico"/> -->
+    <link rel="stylesheet" href="styles/main.css"/>
     <script src="client.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="111545869099-9g2l2jd6b9slqv6m7qgf0n7j5ub7crtu.apps.googleusercontent.com">
@@ -54,7 +55,6 @@
                 <h3 class="title"></h3>
                 <h3 class="date"></h3>
                 <h3 class="time"></h3>
-                <h3 class="type"></h3>
               </div>
             </template>
           </section>
@@ -71,6 +71,21 @@
             <input id="deadline-input" type="radio" name="type" value="deadline">Deadline
           </form>
           <button type="button" id="submit-button">Submit</button>
+          <div id="error-appender"></div>
+        </template>
+        <template id="edit-session">
+          <h2>Edit a session</h2>
+          <button type="button" id="backToSessions-button">Go Back</button>
+          <button type="button" id="delete-button">delete</button>
+          <form>
+            <input type="text" id="title-input" required maxlength="20">
+            <input type="date" id="date-input" required>
+            <input type="time" id="time-input" required>
+            <textarea id="description-input" maxlength="400"></textarea>
+            <input id="session-input" type="radio" name="type" value="session">Session
+            <input id="deadline-input" type="radio" name="type" value="deadline">Deadline
+          </form>
+          <button type="button" id="submit-button">Save</button>
           <div id="error-appender"></div>
         </template>
       </main>

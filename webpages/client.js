@@ -20,92 +20,6 @@ function showLogin() {
   document.getElementById('contentHolder').appendChild(loginPage);
 }
 
-//Show main page and get all the session on thew day
-function showMain() {
-  const mainPageDay = document.getElementById("day-view-page").content.cloneNode(true);
-  document.getElementById('contentHolder').innerHTML='';
-  document.getElementById('contentHolder').appendChild(mainPageDay);
-
-  document.getElementById('day-button').addEventListener('click', viewInDays);
-  document.getElementById('week-button').addEventListener('click', viewInWeeks);
-  document.getElementById('month-button').addEventListener('click', viewInMonths);
-
-  showSessionView();
-}
-
-//Shows the session template
-function showSessionView() {
-  currentView = 'session';
-  const sessionsViewed = document.getElementById("defulat-view").content.cloneNode(true);
-  document.getElementById('sub-content-holder').innerHTML='';
-  document.getElementById('sub-content-holder').appendChild(sessionsViewed);
-  document.getElementById('previous-button').addEventListener('click', showPreviousSessions);
-  document.getElementById('next-button').addEventListener('click', showNextSessions);
-  document.getElementById('addNewSession').addEventListener('click', addNewSession);
-  requestSessions(pageDisplacer, pageType);
-}
-
-//Functions for adding sessions
-//addNewSession and submitASession
-
-//shows the template for adding a session
-function addNewSession() {
-  currentView = 'add';
-  const addingSession = document.getElementById("add-session").content.cloneNode(true);
-  document.getElementById('sub-content-holder').innerHTML='';
-  document.getElementById('sub-content-holder').appendChild(addingSession);
-  document.getElementById('backToSessions-button').addEventListener('click', showSessionView);
-  document.getElementById('submit-button').addEventListener('click', submitASession);
-}
-
-//calls the server to add a session using the input boxes
-async function submitASession() {
-  const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
-  const fetchOptions = {
-    method: 'POST',
-    headers: {'Authorization': 'Bearer ' + token}
-  };
-
-  const titleEl = document.getElementById('title-input');
-  const dateEl = document.getElementById('date-input');
-  const timeEl = document.getElementById('time-input');
-  const descEl = document.getElementById('description-input');
-  const sessionRadioEl = document.getElementById('session-input');
-  const deadlineRadioEl = document.getElementById('deadline-input');
-  const errorAppender = document.getElementById('error-appender');
-
-  if (!titleEl.checkValidity() ||
-      !dateEl.checkValidity() ||
-      !timeEl.checkValidity() ||
-      !descEl.checkValidity() ||
-      !sessionRadioEl.checkValidity()) {
-    document.getElementById('error-appender').innerHTML='ERROR';
-    return;
-  }
-
-  document.getElementById('error-appender').innerHTML='';
-
-  let url = '/data/sessions';
-
-  url += '?title=' + encodeURIComponent(titleEl.value);
-  url += '&date=' + encodeURIComponent(dateEl.value);
-  url += '&time=' + encodeURIComponent(timeEl.value);
-  url += '&desc=' + encodeURIComponent(descEl.value);
-  if (sessionRadioEl.value == 'session') {
-    url += '&type=' + encodeURIComponent(sessionRadioEl.value);
-  } else {
-    url += '&type=' + encodeURIComponent(deadlineRadioEl.value);
-  }
-
-  const response = await fetch(url, fetchOptions);
-  if (!response.ok) {
-    console.log(response.status);
-    return;
-  }
-
-  showSessionView();
-}
-
 //When sgined in on google load the main view and authenticate
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -131,7 +45,7 @@ async function checkServer() {
   }
 }
 
-//Wehn signed out go to login page
+//When signed out go to login page
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
@@ -139,8 +53,34 @@ function signOut() {
   });
 }
 
-//Functions for next and previous arrows
+//Show main page and get all the session on thew day
+function showMain() {
+  const mainPageDay = document.getElementById("day-view-page").content.cloneNode(true);
+  document.getElementById('contentHolder').innerHTML='';
+  document.getElementById('contentHolder').appendChild(mainPageDay);
 
+  document.getElementById('day-button').addEventListener('click', viewInDays);
+  document.getElementById('week-button').addEventListener('click', viewInWeeks);
+  document.getElementById('month-button').addEventListener('click', viewInMonths);
+
+  showSessionView();
+}
+
+//Shows the session template
+function showSessionView() {
+  currentView = 'session';
+  const sessionsViewed = document.getElementById("defulat-view").content.cloneNode(true);
+  document.getElementById('sub-content-holder').innerHTML='';
+  document.getElementById('sub-content-holder').appendChild(sessionsViewed);
+  document.getElementById('previous-button').addEventListener('click', showPreviousSessions);
+  document.getElementById('next-button').addEventListener('click', showNextSessions);
+  document.getElementById('addNewSession').addEventListener('click', addNewSession);
+  requestSessions(pageDisplacer, pageType);
+}
+
+/* ######  Functions for displaying sessions ###### */
+
+//Functions for next and previous arrows
 //sub function to calculate how many days there are in a specific month
 // @return {int} returns how many days in the week as an int
 function getDaysInMonth() {
@@ -259,13 +199,198 @@ async function requestSessions(pageDisplacer, pageType) {
 
   //for all the sessions returned add them to the page in a session card template
   data.forEach((session) => {
-    const seasionCardTemplateEl = document.getElementById('session-card').content.cloneNode(true);
-    seasionCardTemplateEl.querySelector('.title').textContent = session.sessionName || 'No Name';
-    seasionCardTemplateEl.querySelector('.date').textContent = 'Date: ' + session.sessionDate.substring(0, 10) || 'No Date';
-    seasionCardTemplateEl.querySelector('.time').textContent = 'Time: ' + session.sessionTime.substring(0, 5) || 'No Time';
+    const sessionCardTemplateEl = document.getElementById('session-card').content.cloneNode(true);
+    sessionCardTemplateEl.querySelector('.title').textContent = session.sessionName || 'No Name';
+    sessionCardTemplateEl.querySelector('.date').textContent = 'Date: ' + session.sessionDate.substring(0, 10) || 'No Date';
+    sessionCardTemplateEl.querySelector('.time').textContent = 'Time: ' + session.sessionTime.substring(0, 5) || 'No Time';
     if (session.typeOfSession == 'deadline') {
-      seasionCardTemplateEl.querySelector('.session').style = "background-color: red;"
+      sessionCardTemplateEl.querySelector('.session').style = "background-color: red;";
     }
-    sessionsTemplateEl.appendChild(seasionCardTemplateEl);
+    sessionCardTemplateEl.querySelector('.session').id = session.id;
+
+    sessionsTemplateEl.appendChild(sessionCardTemplateEl);
+    document.getElementById(session.id).addEventListener('click', editSession);
   });
 }
+
+/* ###### End of display functions ##### */
+
+/* ###### Functions for adding new sessions ##### */
+//addNewSession and submitASession
+
+//shows the template for adding a session
+function addNewSession() {
+  currentView = 'add';
+  const addingSession = document.getElementById("add-session").content.cloneNode(true);
+  document.getElementById('sub-content-holder').innerHTML='';
+  document.getElementById('sub-content-holder').appendChild(addingSession);
+  document.getElementById('backToSessions-button').addEventListener('click', showSessionView);
+  document.getElementById('submit-button').addEventListener('click', submitASession);
+}
+
+//calls the server to add a session using the input boxes
+async function submitASession() {
+  let errors = false;
+  const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+  const fetchOptions = {
+    method: 'POST',
+    headers: {'Authorization': 'Bearer ' + token}
+  };
+
+  const titleEl = document.getElementById('title-input');
+  const dateEl = document.getElementById('date-input');
+  const timeEl = document.getElementById('time-input');
+  const descEl = document.getElementById('description-input');
+  const sessionRadioEl = document.getElementById('session-input');
+  const deadlineRadioEl = document.getElementById('deadline-input');
+  const errorAppender = document.getElementById('error-appender');
+
+  document.getElementById('error-appender').innerHTML='';
+
+  if (!titleEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid title, this field must not be blank.</p>';
+    errors = true;
+  }
+  if (!dateEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid dat, this field must not be blank.</p>';
+    errors = true;
+  }
+  if (!timeEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid time, this feild must not be blank.</p>';
+    errors = true;
+  }
+  if (!descEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid description</p>';
+    errors = true;
+  }
+  if (errors) {
+    return;
+  }
+
+  let url = '/data/sessions';
+
+  url += '?title=' + encodeURIComponent(titleEl.value);
+  url += '&date=' + encodeURIComponent(dateEl.value);
+  url += '&time=' + encodeURIComponent(timeEl.value);
+  url += '&desc=' + encodeURIComponent(descEl.value);
+  if (sessionRadioEl.checked) {
+    url += '&type=' + encodeURIComponent(sessionRadioEl.value);
+  } else {
+    url += '&type=' + encodeURIComponent(deadlineRadioEl.value);
+  }
+
+  const response = await fetch(url, fetchOptions);
+  if (!response.ok) {
+    console.log(response.status);
+    return;
+  }
+
+  showSessionView();
+}
+
+/* ###### End of functions for adding new sessions ##### */
+
+/* ###### Functions for editing exsisting sessions ##### */
+
+async function editSession() {
+  let id = this.id;
+  const editView = document.getElementById("edit-session").content.cloneNode(true);
+  document.getElementById('sub-content-holder').innerHTML='';
+  document.getElementById('sub-content-holder').appendChild(editView);
+  document.getElementById('backToSessions-button').addEventListener('click', showSessionView);
+  document.getElementById('submit-button').addEventListener('click', saveASession);
+
+  const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+
+  const fetchOptions = {
+    method: 'GET',
+    headers: {'Authorization': 'Bearer ' + token}
+  };
+
+  let url = '/data/sessions/single/';
+  url += '?sessionid=' + id;
+
+  const response = await fetch(url, fetchOptions);
+  if (!response.ok) {
+    console.log(response.status);
+    return;
+  }
+
+  const data = await response.json();
+  data.forEach((session) => {
+    const formattedDate = session.sessionDate.substring(0, 10);
+    document.getElementById('title-input').value = session.sessionName || '';
+    document.getElementById('date-input').value = formattedDate || '';
+    document.getElementById('time-input').value = session.sessionTime || '';
+    document.getElementById('description-input').textContent = session.description || '';
+    if (session.typeOfSession == 'session') {
+      document.getElementById('session-input').checked = true;
+    } else {
+      document.getElementById('deadline-input').checked = true;
+    }
+    document.getElementById('submit-button').class = session.id;
+  });
+}
+
+async function saveASession() {
+  let id = this.class;
+  let errors = false;
+  const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+  const fetchOptions = {
+    method: 'POST',
+    headers: {'Authorization': 'Bearer ' + token}
+  };
+
+  const titleEl = document.getElementById('title-input');
+  const dateEl = document.getElementById('date-input');
+  const timeEl = document.getElementById('time-input');
+  const descEl = document.getElementById('description-input');
+  const sessionRadioEl = document.getElementById('session-input');
+  const deadlineRadioEl = document.getElementById('deadline-input');
+  const errorAppender = document.getElementById('error-appender');
+
+  document.getElementById('error-appender').innerHTML='';
+
+  if (!titleEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid title, this field must not be blank.</p>';
+    errors = true;
+  }
+  if (!dateEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid dat, this field must not be blank.</p>';
+    errors = true;
+  }
+  if (!timeEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid time, this feild must not be blank.</p>';
+    errors = true;
+  }
+  if (!descEl.checkValidity()) {
+    document.getElementById('error-appender').innerHTML+='<p>Invalid description</p>';
+    errors = true;
+  }
+  if (errors) {
+    return;
+  }
+
+  let url = '/data/sessions/edit/';
+
+  url += '?title=' + encodeURIComponent(titleEl.value);
+  url += '&date=' + encodeURIComponent(dateEl.value);
+  url += '&time=' + encodeURIComponent(timeEl.value);
+  url += '&desc=' + encodeURIComponent(descEl.value);
+  if (sessionRadioEl.checked) {
+    url += '&type=' + encodeURIComponent(sessionRadioEl.value);
+  } else {
+    url += '&type=' + encodeURIComponent(deadlineRadioEl.value);
+  }
+  url += '&sessionid=' + encodeURIComponent(id);
+
+  const response = await fetch(url, fetchOptions);
+  if (!response.ok) {
+    console.log(response.status);
+    return;
+  }
+
+  showSessionView();
+}
+
+/* ###### End of functions for editing exsisting sessions ##### */

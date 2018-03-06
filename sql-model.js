@@ -93,7 +93,22 @@ async function addSession(sessionName, sessionDate, sessionTime, description, ty
   await sql.query(insertQuery);
 }
 
+async function getSingleSession(id, userid) {
+  const sql = await init();
+  const query = sql.format('SELECT * FROM sessions WHERE userid = ? AND id = ?', [userid, id]);
+  const [session] = await sql.query(query);
+  return session;
+}
+
+async function saveSingleSession(id, title, date, time, desc, type, userid) {
+  const sql = await init();
+  const insertQuery = sql.format('UPDATE sessions SET sessionName = ?, sessionDate = ?, sessionTime = ?, description = ?, typeOfSession = ? WHERE id = ? AND userid = ?', [title, date, time, desc, type, id, userid]);
+  await sql.query(insertQuery);
+}
+
 module.exports = {
   addSession: addSession,
   getSessions: getSessions,
+  getSingleSession: getSingleSession,
+  saveSingleSession: saveSingleSession,
 };

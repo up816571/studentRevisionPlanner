@@ -15,7 +15,7 @@ app.use('/', express.static('webpages'));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`Revsion app listening on port ${PORT}!`);
 });
 
 // Server API
@@ -25,14 +25,15 @@ app.listen(PORT, async () => {
 //app.post /data/sessions is used to put imputs from the user in to the database
 app.get('/data/sessions', getSessionsToPage);
 app.get('/api/hello', userAuth);
+app.get('/data/sessions/single', getSingleSession);
 app.post('/data/sessions', postNewSessions);
+app.post('/data/sessions/edit', saveSingleSession);
 
-//server function
+// Server function
 
-//Athentication function
+//Authentication function
 async function userAuth (req, res) {
   res.send(req.user.displayName || 'user without a name');
-  console.log('auth req by ' + req.user.emails[0].value);
 }
 
 //Used to get all querys to return the sessions
@@ -50,4 +51,19 @@ async function postNewSessions(req, res) {
   const desc = req.query.desc;
   const type = req.query.type;
   res.send(await db.addSession(title, date, time, desc, type, req.user.id));
+}
+
+async function getSingleSession(req, res) {
+  const sessionId = req.query.sessionid;
+  res.send(await db.getSingleSession(sessionId, req.user.id));
+}
+
+async function saveSingleSession(req, res) {
+  const sessionid = req.query.sessionid;
+  const title = req.query.title;
+  const date = req.query.date;
+  const time = req.query.time;
+  const desc = req.query.desc;
+  const type = req.query.type;
+  res.send(await db.saveSingleSession(sessionid, title, date, time, desc, type, req.user.id));
 }
