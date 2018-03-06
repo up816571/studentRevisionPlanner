@@ -106,9 +106,16 @@ async function saveSingleSession(id, title, date, time, desc, type, userid) {
   await sql.query(insertQuery);
 }
 
+async function deleteSession(id, userid) {
+  const sql = await init();
+  const deleteQuery = sql.format('DELETE FROM sessions WHERE id = ? AND userid = ?', [id, userid]);
+  await sql.query(deleteQuery);
+}
+
 module.exports = {
   getSessions: getSessions,
   addSession: addSession,
   getSingleSession: getSingleSession,
   saveSingleSession: saveSingleSession,
+  deleteSession: deleteSession,
 };

@@ -7,6 +7,7 @@ let todaysDate = new Date();
 const day = 60 * 60 * 24 * 1000;
 let newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
 let currentView = 'session';
+let currentID;
 
 //Intially load the page with the login page
 function initialize() {
@@ -293,13 +294,14 @@ async function submitASession() {
 /* ###### Functions for editing exsisting sessions ##### */
 
 async function editSession() {
-  let id = this.id;
+  currentID = this.id;
   currentView = 'editor';
   const editView = document.getElementById("edit-session").content.cloneNode(true);
   document.getElementById('sub-content-holder').innerHTML='';
   document.getElementById('sub-content-holder').appendChild(editView);
   document.getElementById('backToSessions-button').addEventListener('click', showSessionView);
   document.getElementById('submit-button').addEventListener('click', saveASession);
+  document.getElementById('delete-button').addEventListener('click', deleteASession);
 
   const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
 
@@ -309,7 +311,7 @@ async function editSession() {
   };
 
   let url = '/data/sessions/single/';
-  url += '?sessionid=' + id;
+  url += '?sessionid=' + currentID;
 
   const response = await fetch(url, fetchOptions);
   if (!response.ok) {
@@ -329,12 +331,10 @@ async function editSession() {
     } else {
       document.getElementById('deadline-input').checked = true;
     }
-    document.getElementById('submit-button').class = session.id;
   });
 }
 
 async function saveASession() {
-  let id = this.class;
   let errors = false;
   const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
   const fetchOptions = {
@@ -383,7 +383,7 @@ async function saveASession() {
   } else {
     url += '&type=' + encodeURIComponent(deadlineRadioEl.value);
   }
-  url += '&sessionid=' + encodeURIComponent(id);
+  url += '&sessionid=' + encodeURIComponent(currentID);
 
   const response = await fetch(url, fetchOptions);
   if (!response.ok) {
@@ -395,3 +395,27 @@ async function saveASession() {
 }
 
 /* ###### End of functions for editing exsisting sessions ##### */
+
+/* ###### Functions for deleteing ###### */
+async function deleteASession() {
+  console.log('delete');
+  const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+  const fetchOptions = {
+    method: 'DELETE',
+    headers: {'Authorization': 'Bearer ' + token}
+  };
+
+  let url = '/data/sessions/delete/';
+
+  url += '?sessionid=' + encodeURIComponent(currentID);
+
+  const response = await fetch(url, fetchOptions);
+  if (!response.ok) {
+    console.log(response.status);
+    return;
+  }
+
+  showSessionView();
+}
+
+/* ###### End of functions for deleteing ###### */

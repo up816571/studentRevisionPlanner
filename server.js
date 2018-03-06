@@ -28,6 +28,7 @@ app.get('/api/hello', userAuth);
 app.get('/data/sessions/single', getSingleSession);
 app.post('/data/sessions', postNewSessions);
 app.post('/data/sessions/edit', saveSingleSession);
+app.delete('/data/sessions/delete', deleteSingleSession);
 
 // Server function
 
@@ -66,4 +67,9 @@ async function saveSingleSession(req, res) {
   const desc = req.query.desc;
   const type = req.query.type;
   res.send(await db.saveSingleSession(sessionid, title, date, time, desc, type, req.user.id));
+}
+
+async function deleteSingleSession(req, res) {
+  const sessionid = req.query.sessionid;
+  res.send(await db.deleteSession(sessionid, req.user.id));
 }
