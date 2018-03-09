@@ -208,7 +208,7 @@
     font-weight: 700;
   }
 
-/*
+
   header {
     height: 2.5em;
     background-color: lightblue;
@@ -276,7 +276,13 @@
   .session {
     margin: 10px 0;
   }
-*/
+
+@media (max-width: 400px ) {
+  body {
+    font-size: 10px;
+  }
+}
+
 
 main {
   max-width: 1024px;

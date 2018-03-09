@@ -205,7 +205,7 @@ async function requestSessions(pageDisplacer, pageType) {
     sessionCardTemplateEl.querySelector('.date').textContent = 'Date: ' + session.sessionDate.substring(0, 10) || 'No Date';
     sessionCardTemplateEl.querySelector('.time').textContent = 'Time: ' + session.sessionTime.substring(0, 5) || 'No Time';
     if (session.typeOfSession == 'deadline') {
-      sessionCardTemplateEl.querySelector('.session').style = "background-color: red;";
+      sessionCardTemplateEl.querySelector('.session').style = "background-color: #fc5d19;";
     }
     sessionCardTemplateEl.querySelector('.session').id = session.id;
 
