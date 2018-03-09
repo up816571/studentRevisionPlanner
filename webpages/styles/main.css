@@ -1,153 +1,357 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://unpkg.com/katex@0.9.0-beta/dist/katex.min.css');
+
 
 /* Variables*/
-:root {
-  --bg-col: rgba(237,237,237, 0.5);
-  --main-font:  'Open Sans', sans-serif;
-}
+  :root {
+    --bg-col: rgba(237,237,237, 0.5);
+    --main-font:  'Open Sans', sans-serif;
+  }
 
 /*Defualt styles*/
+  body {
+    background-color: var(--bg-col);
+    font-family: 'Open Sans', sans-serif;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    font-size: 12px;
+  }
+  h1 {
+    font-size: 25px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+  }
+  a {
+    text-decoration: none;
+    color: grey;
+  }
+  td {
+    font-size: 1em;
+  }
 
-body {
-  background-color: var(--bg-col);
-  font-family: 'Open Sans', sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-p {
-  font-size: 12px;
-}
-
-h1 {
-  font-size: 25px;
-}
-
-h2 {
-  font-size: 18px;
-}
-
-h3 {
-  font-size: 16px;
-  font-weight: normal;
-}
-
-a {
-  text-decoration: none;
-  color: grey;
-}
-
-td {
-  font-size: 1em;
-}
+  main {
+    max-width: 1024px;
+    padding: 24px 24px;
+    margin: 0 auto;
+  }
+  main nav {
+    float: right;
+  }
+  main nav ul {
+    display: flex;
+    user-select: none;
+  }
+  main nav ul li {
+    padding: 6px 14px 8px;
+    border-top: .1em solid grey;
+    border-bottom: .1em solid grey;
+    border-left: .1em solid grey;
+    background-color: rgba(0,0,0,.13);
+    list-style-type: none;
+  }
+  main nav ul li:last-child {
+    border-right: .1em solid grey;
+  }
+  main nav ul li:hover {
+    z-index: 9;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),
+                0 1px 1px 0 rgba(0,0,0,.14),
+                0 1px 3px 0 rgba(0,0,0,.12);
+    transition: box-shadow .1s ease-in;
+  }
+  main nav ul li:active {
+    box-shadow: inset 0 0 10px rgba(0,0,0,.44);
+  }
+  main nav ul li a {
+    color: inherit;
+  }
+  main h1 {
+    text-align: center;
+  }
+  main time {
+  }
+  main table {
+    width: 100%;
+    max-height: 50%;
+    border-collapse: collapse;
+    overflow: auto;
+  }
+  main table th {
+    margin: .6em;
+    padding-bottom: .6em;
+  }
+  main table td {
+    padding: 7px;
+    border: .1em solid grey;
+    text-align: center;
+    background-color: rgba(0,0,0,.09);
+  }
+  .with-time tr td:first-child {
+    background-color: transparent;
+    border-color: transparent;
+    border-right-color: grey;
+    text-align: right;
+  }
 
 /*login form*/
-
-.login-form {
-  padding-top: 200px;
-  height: 40%;
-  margin: 0 auto;
-  width: 300px;
-  position: relative;
-}
-
-#sign-in-feild {
-  font-size: 2em;
-  margin: 0 auto;
-  width: 200px;
-  padding-bottom: 1em;
-}
-
-#sign-in {
-  width: 100%;
-  padding-right: 1px;
-  padding: 5px 0 5px 0;
-  margin-top: 2em;
-  font-weight: bold;
-  font-size: 14px
-}
-
-.sign-in-feild {
-  margin: 1em 0 0.5em 0;
-  width: 99%;
-  padding: 3px 0 3px 0;
-  font-size: 14px;
-}
+  .login-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 88vh;
+  }
+  #sign-in-title {
+    margin: .3em;
+    font-weight: normal;
+  }
 
 /*Main page*/
-header {
-  height: 2.5em;
-  background-color: lightblue;
-  padding-top: 5px;
-  padding-left: 10px;
-  font-size: 1.4em;
-}
+  #previous-button {
+    content: '⟵';
+    padding-right: .2em;
+  }
+  #next-button {
+    content: '⟶';
+    padding-left: .2em;
+  }
+  #previous-button, #next-button {
+    font-size: 1.1em;
+    font-family: KaTeX_Main, KaTeX_AMS;
+    font-style: normal;
+    text-align: center;
+    user-select: none;
+    cursor：pointer；
+  }
+  #previous-button:hover, #next-button:hover {
+    color: red;
+  }
+  #addNewSession {
+    float: right;
+    margin: 16px 8px;
+    padding: 6px 14px 8px;
+    border: .1em solid grey;
+    background-color: rgba(0,0,0,.13);
+  }
+  #sub-content-holder h2 {
+    margin: 12px 0;
+    font-weight: normal;
+    color: maroon;
+  }
+  #sub-content-holder button {
+    padding: 6px 14px 8px;
+    border: .1em solid grey;
+    background-color: rgba(0,0,0,.13);
+    list-style-type: none;
+  }
+  #sub-content-holder button:hover, #addNewSession:hover {
+    z-index: 9;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),
+                0 1px 1px 0 rgba(0,0,0,.14),
+                0 1px 3px 0 rgba(0,0,0,.12);
+    transition: box-shadow .1s ease-in;
+  }
+  #sub-content-holder button:active, #addNewSession:active {
+    box-shadow: inset 0 0 10px rgba(0,0,0,.44);
+  }
+  #sub-content-holder form {
+    width: 320px;
+    margin: 16px 0;
+    background-color: snow;
+    border: 1px dashed maroon;
+  }
+  #sub-content-holder form input, #sub-content-holder form textarea {
+    display: block;
+    margin: 8px;
+  }
+  #sub-content-holder form input[type="radio"] {
+    display: inline;
+  }
+  .session {
+    margin: 8px;
+    padding: 16px;
+    background: white;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),
+                0 1px 1px 0 rgba(0,0,0,.14),
+                0 1px 3px 0 rgba(0,0,0,.12);
+    transition: box-shadow .2s linear;
+  }
+  .session:hover {
+    box-shadow: 0 3px 3px -2px rgba(0,0,0,.2),
+                0 3px 4px 0 rgba(0,0,0,.14),
+                0 1px 8px 0 rgba(0,0,0,.12);
+    transition: box-shadow .2s linear;
+  }
+  .session:active {
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),
+                0 6px 10px 0 rgba(0,0,0,.14),
+                0 1px 18px 0 rgba(0,0,0,.12);
+    transition: box-shadow .2s linear;
+  }
+  .session .title {
+    margin-bottom: 8px;
+  }
+  .session .date, .session .time {
+    font-family: monospace;
+  }
+  .session:hover .title {
+    font-weight: 700;
+  }
 
-#right-header {
-  right: 0;
-  margin: 0 auto;
-  min-width: 5em;
-  position: absolute;
-}
+/*
+  header {
+    height: 2.5em;
+    background-color: lightblue;
+    padding-top: 5px;
+    padding-left: 10px;
+    font-size: 1.4em;
+  }
 
-#sign-out {
-  display: inline;
-  padding-right: 20px;
-}
+  #right-header {
+    right: 0;
+    margin: 0 auto;
+    min-width: 5em;
+    position: absolute;
+  }
 
-#type-changer-buttons {
-  display: inline-block;
-  margin-right: 1em;
-}
+  #sign-out {
+    display: inline;
+    padding-right: 20px;
+  }
 
-#type-changer-buttons > button {
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  padding: 7px 10px;
-  display: inline;
-  margin-right: 5px;
-}
+  #type-changer-buttons {
+    display: inline-block;
+    margin-right: 1em;
+  }
 
-#center-nav {
-  max-width: 50em;
-  margin: 0 auto;
-  position: relative;
-}
+  #type-changer-buttons > button {
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 7px 10px;
+    display: inline;
+    margin-right: 5px;
+  }
 
-#center-nav  > h1 {
-  position: absolute;
-}
+  #center-nav {
+    max-width: 50em;
+    margin: 0 auto;
+    position: relative;
+  }
 
-.display-nav-buttons {
-  display: inline;
-}
+  #center-nav  > h1 {
+    position: absolute;
+  }
 
-.display-nav-buttons > button {
-  border: none;
-  padding: 5px 10px;
-  border-radius: 2px;
-}
+  .display-nav-buttons {
+    display: inline;
+  }
 
-.main-view-title {
-  display: inline-block;
-  margin-right: 1em;
-  min-width: 18em;
-}
+  .display-nav-buttons > button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 2px;
+  }
 
-.main-view-title > h2{
-  display: inline;
-}
+  .main-view-title {
+    display: inline-block;
+    margin-right: 1em;
+    min-width: 18em;
+  }
+
+  .main-view-title > h2{
+    display: inline;
+  }
+
+  .session {
+    margin: 10px 0;
+  }
+*/
 
 main {
-  max-width: 70em;
-  margin: 0 auto;
-  padding-left: 0.5em;
+  max-width: 1024px;
 }
-
-.session {
-  margin: 10px 0;
+main nav {
+  float: right;
+}
+main nav ul {
+  display: flex;
+  user-select: none;
+}
+main nav ul li {
+  padding: 6px 14px 8px;
+  border-top: .1em solid grey;
+  border-bottom: .1em solid grey;
+  border-left: .1em solid grey;
+  background-color: rgba(0,0,0,.13);
+  list-style-type: none;
+}
+main nav ul li:last-child {
+  border-right: .1em solid grey;
+}
+main nav ul li:hover {
+  z-index: 9;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2),
+              0 1px 1px 0 rgba(0,0,0,.14),
+              0 1px 3px 0 rgba(0,0,0,.12);
+  transition: box-shadow .1s ease-in;
+}
+main nav ul li:active {
+  box-shadow: inset 0 0 10px rgba(0,0,0,.44);
+}
+main nav ul li a {
+  color: inherit;
+}
+main h1 {
+  text-align: center;
+}
+main time {
+  position: relative;
+  top: -1em;
+}
+main time::before {
+  content: '⟵';
+  padding-right: .2em;
+}
+main time::after {
+  content: '⟶';
+  padding-left: .2em;
+}
+main time::before, main time::after {
+  font-size: 1.1em;
+  font-family: KaTeX_Main, KaTeX_AMS;
+  font-style: normal;
+  text-align: center;
+}
+main table {
+  width: 100%;
+  max-height: 50%;
+  border-collapse: collapse;
+  overflow: auto;
+}
+main table th {
+  margin: .6em;
+  padding-bottom: .6em;
+}
+main table td {
+  padding: 7px;
+  border: .1em solid grey;
+  text-align: center;
+  background-color: rgba(0,0,0,.09);
+}
+.with-time tr td:first-child {
+  background-color: transparent;
+  border-color: transparent;
+  border-right-color: grey;
+  text-align: right;
 }
