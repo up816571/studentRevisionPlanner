@@ -21,7 +21,7 @@ function showLogin() {
   document.getElementById('contentHolder').appendChild(loginPage);
 }
 
-//When sgined in on google load the main view and authenticate
+//When signed in on google, load the main view and authenticate
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   pageDisplacer = 0;
@@ -54,7 +54,7 @@ function signOut() {
   });
 }
 
-//Show main page and get all the session on thew day
+//Show main page and get all the session on the day and load event listener
 function showMain() {
   const mainPageDay = document.getElementById("day-view-page").content.cloneNode(true);
   document.getElementById('contentHolder').innerHTML='';
@@ -67,7 +67,7 @@ function showMain() {
   showSessionView();
 }
 
-//Shows the session template
+//Shows the session template and add al event listener
 function showSessionView() {
   currentView = 'session';
   const sessionsViewed = document.getElementById("defulat-view").content.cloneNode(true);
@@ -207,8 +207,9 @@ async function requestSessions(pageDisplacer, pageType) {
     if (session.typeOfSession == 'deadline') {
       sessionCardTemplateEl.querySelector('.session').style = "background-color: #fc5d19;";
     }
+    //Add the id of the session from the db as an id to the class
     sessionCardTemplateEl.querySelector('.session').id = session.id;
-
+    //add to the page and give it an event listner to be clicked
     sessionsDivEl.appendChild(sessionCardTemplateEl);
     document.getElementById(session.id).addEventListener('click', editSession);
   });
@@ -219,7 +220,7 @@ async function requestSessions(pageDisplacer, pageType) {
 /* ###### Functions for adding new sessions ##### */
 //addNewSession and submitASession
 
-//shows the template for adding a session
+//shows the template for adding a session and adds venet listener
 function addNewSession() {
   currentView = 'add';
   const addingSession = document.getElementById("add-session").content.cloneNode(true);
@@ -247,7 +248,7 @@ async function submitASession() {
   const errorAppender = document.getElementById('error-appender');
 
   document.getElementById('error-appender').innerHTML='';
-
+  //check for errors and add in appropriate messages for the errors
   if (!titleEl.checkValidity()) {
     document.getElementById('error-appender').innerHTML+='<p>Invalid title, this field must not be blank.</p>';
     errors = true;
@@ -292,7 +293,7 @@ async function submitASession() {
 /* ###### End of functions for adding new sessions ##### */
 
 /* ###### Functions for editing exsisting sessions ##### */
-
+//Add all the data into the edit page when a session is clickd from any display page
 async function editSession() {
   currentID = this.id;
   currentView = 'editor';
@@ -334,6 +335,7 @@ async function editSession() {
   });
 }
 
+//Save the values in the edit page back to the database
 async function saveASession() {
   let errors = false;
   const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
@@ -351,7 +353,7 @@ async function saveASession() {
   const errorAppender = document.getElementById('error-appender');
 
   document.getElementById('error-appender').innerHTML='';
-
+  //check fro errors on the page
   if (!titleEl.checkValidity()) {
     document.getElementById('error-appender').innerHTML+='<p>Invalid title, this field must not be blank.</p>';
     errors = true;
@@ -397,6 +399,7 @@ async function saveASession() {
 /* ###### End of functions for editing exsisting sessions ##### */
 
 /* ###### Functions for deleteing ###### */
+//Delete the sessions based of the id it has
 async function deleteASession() {
   console.log('delete');
   const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;

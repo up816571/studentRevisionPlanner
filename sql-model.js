@@ -93,6 +93,10 @@ async function addSession(sessionName, sessionDate, sessionTime, description, ty
   await sql.query(insertQuery);
 }
 
+//getSingleSession is used to display one session for editing based on the session that was clicked
+// @params {id} the id of the session that was clicked
+// @params {userid} the users id used for validation
+// @return {session} returns the session yo be displayed
 async function getSingleSession(id, userid) {
   const sql = await init();
   const query = sql.format('SELECT * FROM sessions WHERE userid = ? AND id = ?', [userid, id]);
@@ -100,12 +104,23 @@ async function getSingleSession(id, userid) {
   return session;
 }
 
+//saveSingleSession is used to update a exesting session
+// @params {id} the id of the session that was clicked
+// @params {sessionName} the sessions name to save
+// @params {sessionDate} the sessions date to save
+// @params {sessionTime} the sessione time to save
+// @params {description} the sessions description to save
+// @params {typeOfSession} if the sesssion is a session or deadline
+// @params {userid} the user to save that session to
 async function saveSingleSession(id, title, date, time, desc, type, userid) {
   const sql = await init();
   const insertQuery = sql.format('UPDATE sessions SET sessionName = ?, sessionDate = ?, sessionTime = ?, description = ?, typeOfSession = ? WHERE id = ? AND userid = ?', [title, date, time, desc, type, id, userid]);
   await sql.query(insertQuery);
 }
 
+//deleteSession is used to remove a session from the database
+// @params {id} the id of the session that was clicked
+// @params {userid} the users id used for validation
 async function deleteSession(id, userid) {
   const sql = await init();
   const deleteQuery = sql.format('DELETE FROM sessions WHERE id = ? AND userid = ?', [id, userid]);

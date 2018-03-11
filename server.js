@@ -22,7 +22,11 @@ app.listen(PORT, async () => {
 
 //app.get /data/sessions is used to get sessions from the sql database to the page
 //app.get /api/hello is used for authentication
+//app.get /data/sessions/single is used for editing a session
 //app.post /data/sessions is used to put imputs from the user in to the database
+//app.post /data/sessions/edit is used to save a single edited session
+//app.delete /data/sessions/delete is used to remove a session
+
 app.get('/data/sessions', getSessionsToPage);
 app.get('/api/hello', userAuth);
 app.get('/data/sessions/single', getSingleSession);
@@ -54,11 +58,13 @@ async function postNewSessions(req, res) {
   res.send(await db.addSession(title, date, time, desc, type, req.user.id));
 }
 
+//Loads a single session
 async function getSingleSession(req, res) {
   const sessionId = req.query.sessionid;
   res.send(await db.getSingleSession(sessionId, req.user.id));
 }
 
+//Saves a single session bak to the database
 async function saveSingleSession(req, res) {
   const sessionid = req.query.sessionid;
   const title = req.query.title;
@@ -69,6 +75,7 @@ async function saveSingleSession(req, res) {
   res.send(await db.saveSingleSession(sessionid, title, date, time, desc, type, req.user.id));
 }
 
+//Removes a session from the database
 async function deleteSingleSession(req, res) {
   const sessionid = req.query.sessionid;
   res.send(await db.deleteSession(sessionid, req.user.id));
