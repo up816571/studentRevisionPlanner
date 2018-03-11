@@ -142,6 +142,48 @@ function viewInMonths() {
   detectReload();
 }
 
+//Used to get each weeks start and end date
+function getWeeksStartAndEndDates(month, year) {
+    let weeks = [],
+        firstDate = new Date(year, month, 1),
+        lastDate = new Date(year, month + 1, 0),
+        numDays = lastDate.getDate();
+
+    let start = 1;
+    let end = 7 - firstDate.getDay();
+    if (start == 1) {
+        if (firstDate.getDay() === 0) {
+            end = 1;
+        } else {
+            end = 7 - firstDate.getDay() + 1;
+        }
+    }
+    while (start <= numDays) {
+        weeks.push({start: start, end: end});
+        start = end + 1;
+        end = end + 7;
+        end = start === 1 && end === 8 ? 1 : end;
+        if (end > numDays) {
+            end = numDays;
+        }
+    }
+    return weeks;
+}
+
+function dateSuffix(i) {
+    let n = i % 10,
+        j = i % 100;
+    if (n == 1 && j != 11) {
+        return i + "st";
+    } else if (n == 2 && j != 12) {
+        return i + "nd";
+    } else if (n == 3 && j != 13) {
+        return i + "rd";
+    } else {
+      return i + "th";
+    }
+}
+
 //Add all the sessions to the page
 async function requestSessions(pageDisplacer, pageType) {
   const token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
@@ -207,12 +249,23 @@ async function requestSessions(pageDisplacer, pageType) {
   }
 
   if (pageType == 'week') {
-    daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     for (i = 0; i < 7; i++) {
       const div = document.createElement('div');
       div.id = daysInWeek[i];
       div.className += "weekday";
       div.innerHTML = '<h2>' + daysInWeek[i] +'</h2>'
+      sessionsDivEl.appendChild(div);
+    }
+  }
+
+  if (pageType == 'month') {
+    let weekDates = getWeeksStartAndEndDates(newDate.getMonth(), newDate.getFullYear());
+    for (i = 0; i < weekDates.length; i++) {
+      const div = document.createElement('div');
+      div.id = 'week'+i;
+      div.className += "week";
+      div.innerHTML = '<h2>Sessions for the ' + dateSuffix(weekDates[i].start) + ' to the ' + dateSuffix(weekDates[i].end) +'</h2>'
       sessionsDivEl.appendChild(div);
     }
   }
@@ -257,7 +310,12 @@ async function requestSessions(pageDisplacer, pageType) {
       }
       //sessionsDivEl.appendChild(sessionCardTemplateEl);
     } else {
-      sessionsDivEl.appendChild(sessionCardTemplateEl);
+      let weekDates = getWeeksStartAndEndDates(newDate.getMonth(), newDate.getFullYear());
+      for (let i = 0; i < weekDates.length; i++) {
+        if (sessionsDate.getDate() >= weekDates[i].start && sessionsDate.getDate() <= weekDates[i].end) {
+          document.getElementById('week'+i).appendChild(sessionCardTemplateEl);
+        }
+      }
     }
     //sessionsDivEl.appendChild(sessionCardTemplateEl);
     document.getElementById(session.id).addEventListener('click', editSession);
