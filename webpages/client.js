@@ -166,7 +166,7 @@ async function requestSessions(pageDisplacer, pageType) {
   const dateForSessionsEl = document.getElementById('session-dates');
 
   newDate = new Date(todaysDate.getTime() + day * pageDisplacer);
-  const formattedDate = newDate.toISOString().substring(0, 10);
+  const formattedDate = newDate.toUTCString().substring(0, 16);
 
   //If the view is in dady then display the day as a header
   //If in week show between the 2 dates
@@ -179,13 +179,13 @@ async function requestSessions(pageDisplacer, pageType) {
 
     let monday = new Date(now);
     monday.setDate(monday.getDate() - monday.getDay() + 1);
-    formattedMinDate = monday.toISOString().substring(0, 10);
+    formattedMinDate = monday.toUTCString().substring(5, 16);
 
     let sunday = new Date(now);
     sunday.setDate(sunday.getDate() - sunday.getDay() + 7);
-    formattedMaxDate = sunday.toISOString().substring(0, 10);
-    dateForSessionsEl.textContent='Sessions between ' + formattedMinDate + ' and ' + formattedMaxDate;
-  } else if (pageType == 'month') {
+    formattedMaxDate = sunday.toUTCString().substring(5, 16);
+    dateForSessionsEl.textContent='Sessions for ' + formattedMinDate + ' to ' + formattedMaxDate;
+  } else {
     const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
     dateForSessionsEl.textContent='All Sessions for ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear();
@@ -194,15 +194,35 @@ async function requestSessions(pageDisplacer, pageType) {
   sessionsDivEl.innerHTML='';
 
   if (data.length == 0) {
-    sessionsDivEl.innerHTML='<h3>You have no sessions</h3>';
-    return;
+    if (pageType == 'day') {
+      sessionsDivEl.innerHTML='<h2>You have no sessions or deadlines today</h2>';
+      return;
+    } else if (pageType == 'week') {
+      sessionsDivEl.innerHTML='<h2>You have no sessions or deadlines for this week</h2>';
+      return;
+    } else {
+      sessionsDivEl.innerHTML='<h2>You have no sessions or deadlines for this month</h2>';
+      return;
+    }
+  }
+
+  if (pageType == 'week') {
+    daysInWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    for (i = 0; i < 7; i++) {
+      const div = document.createElement('div');
+      div.id = daysInWeek[i];
+      div.className += "weekday";
+      div.innerHTML = '<h2>' + daysInWeek[i] +'</h2>'
+      sessionsDivEl.appendChild(div);
+    }
   }
 
   //for all the sessions returned add them to the page in a session card template
   data.forEach((session) => {
     const sessionCardTemplateEl = document.getElementById('session-card').content.cloneNode(true);
     sessionCardTemplateEl.querySelector('.title').textContent = session.sessionName || 'No Name';
-    sessionCardTemplateEl.querySelector('.date').textContent = 'Date: ' + session.sessionDate.substring(0, 10) || 'No Date';
+    let sessionsDate = new Date(session.sessionDate);
+    sessionCardTemplateEl.querySelector('.date').textContent = 'Date: ' + sessionsDate.toUTCString().substring(5, 16) || 'No Date';
     sessionCardTemplateEl.querySelector('.time').textContent = 'Time: ' + session.sessionTime.substring(0, 5) || 'No Time';
     if (session.typeOfSession == 'deadline') {
       sessionCardTemplateEl.querySelector('.session').style = "background-color: #fc5d19;";
@@ -210,7 +230,36 @@ async function requestSessions(pageDisplacer, pageType) {
     //Add the id of the session from the db as an id to the class
     sessionCardTemplateEl.querySelector('.session').id = session.id;
     //add to the page and give it an event listner to be clicked
-    sessionsDivEl.appendChild(sessionCardTemplateEl);
+    if (pageType == 'day') {
+      sessionsDivEl.appendChild(sessionCardTemplateEl);
+    } else if (pageType == 'week') {
+      switch (sessionsDate.getDay()) {
+        case 0:
+          document.getElementById('Sunday').appendChild(sessionCardTemplateEl);
+          break;
+        case 1:
+          document.getElementById('Monday').appendChild(sessionCardTemplateEl);
+          break;
+        case 2:
+          document.getElementById('Tuesday').appendChild(sessionCardTemplateEl);
+          break;
+        case 3:
+          document.getElementById('Wednesday').appendChild(sessionCardTemplateEl);
+          break;
+        case 4:
+          document.getElementById('Thursday').appendChild(sessionCardTemplateEl);
+          break;
+        case 5:
+          document.getElementById('Friday').appendChild(sessionCardTemplateEl);
+          break;
+        case 6:
+          document.getElementById('Saturday').appendChild(sessionCardTemplateEl);
+      }
+      //sessionsDivEl.appendChild(sessionCardTemplateEl);
+    } else {
+      sessionsDivEl.appendChild(sessionCardTemplateEl);
+    }
+    //sessionsDivEl.appendChild(sessionCardTemplateEl);
     document.getElementById(session.id).addEventListener('click', editSession);
   });
 }

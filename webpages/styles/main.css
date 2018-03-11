@@ -115,14 +115,6 @@
   }
 
 /*Main page*/
-  #previous-button {
-    content: '⟵';
-    padding-right: .2em;
-  }
-  #next-button {
-    content: '⟶';
-    padding-left: .2em;
-  }
   #previous-button, #next-button {
     font-size: 1.1em;
     font-family: KaTeX_Main, KaTeX_AMS;
@@ -136,7 +128,6 @@
   }
   #addNewSession {
     float: right;
-    margin: 16px 8px;
     padding: 6px 14px 8px;
     border: .1em solid grey;
     background-color: rgba(0,0,0,.13);
@@ -175,6 +166,9 @@
   #sub-content-holder form input[type="radio"] {
     display: inline;
   }
+
+/* Sessions */
+
   .session {
     margin: 8px;
     padding: 16px;
@@ -208,6 +202,14 @@
     font-weight: 700;
   }
 
+  .weekday {
+    max-width: 13em;
+    display: inline-table;
+    min-width: 10em;
+    margin-left: 1em;
+  }
+
+/* Header */
 
   header {
     height: 2.5em;
@@ -277,12 +279,7 @@
     margin: 10px 0;
   }
 
-@media (max-width: 400px ) {
-  body {
-    font-size: 10px;
-  }
-}
-
+/* Main styles */
 
 main {
   max-width: 1024px;
@@ -325,14 +322,7 @@ main time {
   position: relative;
   top: -1em;
 }
-main time::before {
-  content: '⟵';
-  padding-right: .2em;
-}
-main time::after {
-  content: '⟶';
-  padding-left: .2em;
-}
+
 main time::before, main time::after {
   font-size: 1.1em;
   font-family: KaTeX_Main, KaTeX_AMS;
@@ -360,4 +350,12 @@ main table td {
   border-color: transparent;
   border-right-color: grey;
   text-align: right;
+}
+
+/* Mobile styles */
+
+@media (max-width: 400px ) {
+  body {
+    font-size: 10px;
+  }
 }
