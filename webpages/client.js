@@ -142,37 +142,39 @@ function viewInMonths() {
   detectReload();
 }
 
-//Used to get each weeks start and end date
+// Used to get each weeks start and end date
+// @return {weeks} to return all the start and end dates of each week
 function getWeeksStartAndEndDates(month, year) {
-    let weeks = [],
-        firstDate = new Date(year, month, 1),
-        lastDate = new Date(year, month + 1, 0),
-        numDays = lastDate.getDate();
+  let weeks = [];
+  let first = new Date(year, month, 1);
+  let last = new Date(year, month + 1, 0);
+  let numDays = last.getDate();
+  let start = 1;
+  let end = 7 - first.getDay();
 
-    let start = 1;
-    let end = 7 - firstDate.getDay();
-    if (start == 1) {
-        if (firstDate.getDay() === 0) {
-            end = 1;
-        } else {
-            end = 7 - firstDate.getDay() + 1;
-        }
+  if (start == 1) {
+    if (first.getDay() == 0) {
+      end = 1;
+    } else {
+      end = 7 - first.getDay() + 1;
     }
-    while (start <= numDays) {
-        weeks.push({start: start, end: end});
-        start = end + 1;
-        end = end + 7;
-        end = start === 1 && end === 8 ? 1 : end;
-        if (end > numDays) {
-            end = numDays;
-        }
-    }
-    return weeks;
+  }
+  while (start <= numDays) {
+    weeks.push({start: start, end: end});
+    start = end + 1;
+    end = end + 7;
+    end = (start == 1 && end == 8) ? 1 : end;
+    if (end > numDays) end = numDays;
+  }
+  return weeks;
 }
 
+// Date suffix is is used to get the suffix when passed a date
+// @return the number and the suffix
 function dateSuffix(i) {
-    let n = i % 10,
-        j = i % 100;
+    let n = i % 10;
+    let j = i % 100;
+
     if (n == 1 && j != 11) {
         return i + "st";
     } else if (n == 2 && j != 12) {
