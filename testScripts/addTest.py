@@ -2,8 +2,13 @@ from helium.api import *
 import getpass
 import time
 
-pswd = getpass.getpass()
+today = time.strftime('%Y%m%d')
+day = today[-2:]
+month = today[4:6]
+year = today[:4]
+
 email = input("enter an email ")
+pswd = getpass.getpass()
 
 start_chrome()
 go_to("up816571.myvm.port.ac.uk")
@@ -14,10 +19,11 @@ time.sleep(2)
 write(pswd)
 press(ENTER)
 time.sleep(3)
+
 click("New session")
 write("Test")
 press(TAB)
-write("16032018")
+write(day + month + year)
 press(TAB)
 write("1230")
 press(TAB)
@@ -26,11 +32,17 @@ press(TAB)
 time.sleep(1)
 press(ENTER)
 time.sleep(1)
+if Text("Test").exists():
+    print("Test 1 Passed")
+else:
+    print("Test 1 failed, the item was not created")
+time.sleep(1)
+
 click("New session")
 time.sleep(1)
 write("", into="title")
 press(TAB)
-write("16032018")
+write(day + month + year)
 press(TAB)
 write("1230")
 press(TAB)
@@ -43,8 +55,13 @@ write("A Really Long Test String Over 20", into="title")
 time.sleep(1)
 click("Submit")
 time.sleep(1)
+if Text("A Really Long Test S").exists():
+    print("Test 2 Passed")
+else:
+    print("Test 2 failed, the item was not created")
+
 click("New session")
-write("Test2", into="title")
+write("Test3", into="title")
 press(TAB)
 press(TAB)
 write("032018")
@@ -58,10 +75,15 @@ press(ENTER)
 time.sleep(1)
 click("Go Back")
 time.sleep(1)
+if Text("Test3").exists():
+    print("Test 3 failed, the item should not have been added")
+else:
+    print("Test 3 passed")
+
 click("New session")
-write("Test2", into="title")
+write("Test4", into="title")
 press(TAB)
-write("16032018")
+write(day + month + year)
 press(TAB)
 press(TAB)
 write("30")
@@ -73,10 +95,15 @@ press(ENTER)
 time.sleep(1)
 click("Go Back")
 time.sleep(1)
+if Text("Test4").exists():
+    print("Test 4 failed, the item should not have been added")
+else:
+    print("Test 4 passed")
+
 click("New session")
-write("Test3", into="title")
+write("Test5", into="title")
 press(TAB)
-write("16032018")
+write(day + month + year)
 press(TAB)
 write("1230")
 press(TAB)
@@ -86,11 +113,17 @@ press(TAB)
 time.sleep(1)
 press(ENTER)
 time.sleep(1)
+if Text("Test5").exists():
+    print("Test 5 passed")
+else:
+    print("Test 5 failed, the session should have been created")
+
+
 click("New session")
 time.sleep(3)
-write("Test4", into="title")
+write("Test6", into="title")
 press(TAB)
-write("16032018")
+write(day + month + year)
 press(TAB)
 write("1230")
 press(TAB)
@@ -99,4 +132,8 @@ press(TAB)
 time.sleep(1)
 press(ENTER)
 time.sleep(1)
+if Text("Test6").exists():
+    print("Test 6 passed")
+else:
+    print("Test 6 failed, The item session should have been created")
 kill_browser()

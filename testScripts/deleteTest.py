@@ -2,6 +2,12 @@ from helium.api import *
 import getpass
 import time
 
+
+today = time.strftime('%Y%m%d')
+day = today[-2:]
+month = today[4:6]
+year = today[:4]
+
 email = input("enter an email ")
 pswd = getpass.getpass()
 
@@ -18,7 +24,7 @@ time.sleep(3)
 click("New session")
 write("Delete")
 press(TAB)
-write("15032018")#Important this must be todays date dd/mm/yyyy
+write(day + month + year)
 press(TAB)
 write("1230")
 press(TAB)
@@ -32,4 +38,8 @@ click("Delete")
 time.sleep(1)
 click("delete")
 time.sleep(1)
+if Text("Delete").exists():
+    print("Test 1 Failed, the item should have been deleted")
+else:
+    print("Test 1 passed")
 kill_browser()
