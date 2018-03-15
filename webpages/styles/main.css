@@ -116,14 +116,7 @@
   }
 
 /*Main page*/
-#previous-button {
-    content: '⟵';
-    padding-right: .2em;
-  }
-  #next-button {
-    content: '⟶';
-    padding-left: .2em;
-  }
+
   #previous-button, #next-button {
     font-size: 1.1em;
     font-family: KaTeX_Main, KaTeX_AMS;
@@ -137,7 +130,7 @@
   }
   #addNewSession {
     float: right;
-    margin: 16px 8px;
+    margin: 4px;
     padding: 6px 14px 8px;
     border: .1em solid grey;
     background-color: rgba(0,0,0,.13);
@@ -213,11 +206,10 @@
   }
 
 .weekday {
-    max-width: 13em;
+    width: 13em;
     display: inline-table;
     margin-left: 1em;
   }
-
 
 /* Header */
 
@@ -362,10 +354,31 @@ main table td {
   text-align: right;
 }
 
+#block-buttons {
+  display: inline-block;
+  margin-top: 5px;
+}
+
 /* Mobile styles */
+
+@media (max-width: 550px ) {
+  header {
+    height: 4em;
+  }
+
+  #right-header {
+    margin-top: 2em;
+  }
+}
 
 @media (max-width: 400px ) {
   body {
-    font-size: 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 630px) {
+  #addNewSession {
+    float: none;
   }
 }

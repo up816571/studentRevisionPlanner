@@ -1,13 +1,10 @@
 # Student Revision Planner
-
 ##Contributors
 ######up816571 - up816571
 ######Tebogo11 - up818360
 ######YuzhenHuang - up794200
-
 Instructions
 Normally a server will be running on http://up816571.myvm.port.ac.uk/
-
 If installing to a different server
 -The code will be downloaded onto a node server
 -Npm will be run
