@@ -10,29 +10,7 @@ const GoogleAuth = require('simple-google-openid');
 // you can put your client ID here
 app.use(GoogleAuth("111545869099-9g2l2jd6b9slqv6m7qgf0n7j5ub7crtu.apps.googleusercontent.com"));
 
-// // return a fake user to debug if we don't have a user
-// app.use('/', (req, res, next) => {
-//   if (!req.user) {
-//     req.user = {
-//       provider: 'google',
-//       id: '110900211868756842381',
-//       displayName: 'luke',
-//       name: {
-//         familyName: 'Bro',
-//         givenName: 'luke',
-//         middleName: ''
-//       },
-//       emails: [
-//         {
-//           value: 'luke@outlook.com',
-//           type: 'home'
-//         }
-//       ],
-//       photos: []
-//     }
-//   }
-//   next();
-// });
+
 
 // this will serve the HTML file shown below
 app.use('/', express.static('webpages'));
@@ -41,8 +19,6 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {
   console.log(`Revsion app listening on port ${PORT}!`);
 });
-
-app.get('/api/hello', userAuth);
 
 // Server API
 
@@ -65,7 +41,6 @@ app.delete('/data/sessions/delete', deleteSingleSession);
 //Authentication function
 async function userAuth (req, res) {
   res.send(req.user.displayName || 'user without a name');
-  console.log('successful authenticated request by ' + req.user.emails[0].value);
 }
 
 //Used to get all querys to return the sessions
