@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://unpkg.com/katex@0.9.0-beta/dist/katex.min.css');
 
-
 /* Variables*/
   :root {
     --bg-col: rgba(237,237,237, 0.5);
@@ -44,7 +43,8 @@
     margin: 0 auto;
   }
   main nav {
-    float: right;
+    text-align: right;
+    margin: 20px 0;
   }
   main nav ul {
     display: flex;
@@ -115,6 +115,14 @@
   }
 
 /*Main page*/
+#previous-button {
+    content: '⟵';
+    padding-right: .2em;
+  }
+  #next-button {
+    content: '⟶';
+    padding-left: .2em;
+  }
   #previous-button, #next-button {
     font-size: 1.1em;
     font-family: KaTeX_Main, KaTeX_AMS;
@@ -128,6 +136,7 @@
   }
   #addNewSession {
     float: right;
+    margin: 16px 8px;
     padding: 6px 14px 8px;
     border: .1em solid grey;
     background-color: rgba(0,0,0,.13);
@@ -200,12 +209,6 @@
   }
   .session:hover .title {
     font-weight: 700;
-  }
-
-  .weekday {
-    max-width: 13em;
-    display: inline-table;
-    margin-left: 1em;
   }
 
 /* Header */
