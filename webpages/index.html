@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Revision Planner</title>
-    <!-- <link rel="icon" href="images/favicon.ico"/> -->
     <link rel="icon" type="image/png" href="images/revisionicon.ico">
     <link rel="stylesheet" href="styles/main.css"/>
     <script src="client.js"></script>
@@ -23,24 +22,34 @@
       </div>
     </template>
     <template id="day-view-page">
-      <h1>Revision Planner</h1>
-      <nav>
-        <div style="display:inline-block">
-          <ul>
-            <li id="day-button">Day</li>
-            <li id="week-button">Week</li>
-            <li id="month-button">Month</li>
-          </ul>
+      <header>
+       <div id="center-nav">
+          <h1>Revision Planner</h1>
+          <div id="right-header">
+            <div id="type-changer-buttons">
+              <button type="button" id="day-button">Day</button>
+              <button type="button" id="week-button">Week</button>
+              <button type="button" id="month-button">Month</button>
+            </div>
+            <div id="sign-out">
+              <a href="#" onclick="signOut();">Sign out</a>
+            </div>
+          </div>
         </div>
-        <!-- <button onclick="signOut();">Sign out</button> -->
-      </nav>
-      <span id="previous-button">⟵</span>
-      <time id="session-dates">15th January 2018</time>
-      <span id="next-button">⟶</span>
-      <div id="sub-content-holder"></div>    
-       <!-- sub templates -->            
-       <template id="defulat-view"> 
-         <section id="session-display">
+        </header>
+      <main>
+        <div id="sub-content-holder"></div>
+        <!-- sub templates -->
+        <template id="defulat-view">
+          <div class="main-view-title">
+            <h2 id="session-dates"></h2>
+          </div>
+          <div class="display-nav-buttons">
+            <button type="button" id="previous-button"><</button>
+            <button type="button" id="next-button">></button>
+            <button type="button" id="addNewSession">New session</button>
+          </div>
+          <section id="session-display">
             <div id="session-helper"></div>
             <template id="session-card">
               <div class="session">
@@ -50,8 +59,7 @@
               </div>
             </template>
           </section>
-        </template>
-      
+        </template>      
         <template id="add-session">
           <h2>Add a session</h2>
           <button type="button" id="backToSessions-button">Go Back</button>
@@ -81,6 +89,7 @@
           <button type="button" id="submit-button">Save</button>
           <div id="error-appender"></div>
         </template>
+      </main>
     </template>
   </body>
 </html>
