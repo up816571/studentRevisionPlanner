@@ -361,6 +361,12 @@ main table td {
 
 /* Mobile styles */
 
+@media (max-width: 630px) {
+  #addNewSession {
+    float: none;
+  }
+}
+
 @media (max-width: 550px ) {
   header {
     height: 4em;
@@ -371,14 +377,14 @@ main table td {
   }
 }
 
-@media (max-width: 400px ) {
-  body {
-    font-size: 12px;
+@media (max-width: 460px) {
+  #sub-content-holder form{
+    width: auto;
   }
 }
 
-@media (max-width: 630px) {
-  #addNewSession {
-    float: none;
+@media (max-width: 400px ) {
+  body {
+    font-size: 12px;
   }
 }
